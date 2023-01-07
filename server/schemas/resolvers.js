@@ -10,7 +10,15 @@ const resolvers = {
             } catch (error) {
                 throw error;
             }
-        }
+        },
+        singlePokemon: async (parent,args,{dataSources}) => {
+            try {
+                const pokemon = await dataSources.PokemonAPI.getSinglePokemon(args.pokemonName)
+                return pokemon;
+            } catch {
+                throw error;
+            }
+        },
     }
 }
 

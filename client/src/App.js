@@ -11,9 +11,10 @@ import {
 
 import './App.css';
 import Header from './components/header';
+import Main from './pages/Main';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
 })
 
@@ -23,6 +24,7 @@ function App() {
       <NextUIProvider>
         <Router>
           <Header />
+          <Main />
         </Router>
       </NextUIProvider>
     </ApolloProvider>
