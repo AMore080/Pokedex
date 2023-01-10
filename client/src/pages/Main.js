@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Card, Col, Button, Text, Popover, Container, Loading } from '@nextui-org/react'
-
+import { QUERY_SINGLEPOKEMON, QUERY_POKEMON } from "../utils/queries";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { QUERY_POKEMON, QUERY_SINGLEPOKEMON } from "../utils/queries";
 import axios from 'axios';
+import PokeCards from "../components/pokemonCard";
 
 const Main = () => {
-    const { loading, data } = useQuery(QUERY_POKEMON);
-    const [url,setUrl] = useState('https://pokeapi.co/api/v2/pokemon/');
-    const [imgSrc, setImg] = useState('');
+    const { loading, data: pokemonData } = useQuery(QUERY_POKEMON);
 
-    const pokemons = data?.pokemons
-
-    useEffect(() => {
-    const handlePokemonSprite = async (pokemonName) => {
-      try {
-        console.log(pokemonName);
-        let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-        setImg(response.data.sprites.front_default);
-      } catch (error) {
-        throw error;
-      }
-    }
-  }, []);
+    const pokemons = pokemonData?.pokemons
     
     return (
       <div>
@@ -33,20 +19,11 @@ const Main = () => {
               loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
             />
           ) : (
-        <Grid.Container gap={2} justify='center'>
+        <Grid.Container gap={2} justify='center' css={{minWidth: "50%"}}>
             {pokemons.map((pokemon) => {
-              handlePokemonSprite(pokemon.name)
                 return (
                   <Grid lg={4} xs={4} md={3}>
-                    <Card key={pokemon.name}>
-                      <Card.Body css={{background: '#2b2d42'}}>
-                        <Card.Image 
-                          alt={`${pokemon.name}`}
-                          src={"a"}
-                        />
-                        <Text>{pokemon.name}</Text>
-                      </Card.Body>
-                    </Card>
+                    <PokeCards pokemonName={pokemon.name} />
                   </Grid>
                 )
             })}
