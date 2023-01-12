@@ -6,6 +6,12 @@ const typeDefs = gql`
         url: String!
     }
 
+    type urlData {
+        next: String!
+        previous: String
+        results: [Pokemon]
+    }
+
     type Types {
         type: Type
     }
@@ -37,6 +43,7 @@ const typeDefs = gql`
     }
 
     type Query {
+        pokemonData(limit: Int, offset: Int): urlData 
         pokemons: [Pokemon]
         singlePokemon(pokemonName: String!): SinglePokemon
     }
