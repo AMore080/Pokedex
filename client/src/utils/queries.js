@@ -34,8 +34,9 @@ query singlePokemon($pokemonName: String!) {
 
 
 export const QUERY_POKEMONDATA = gql`
-query pokeData {
-  pokemonData {
+query pokeData($offset: Int) {
+  pokemonData(offset: $offset) {
+    count
     next
     previous
     results {

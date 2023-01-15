@@ -7,6 +7,7 @@ const typeDefs = gql`
     }
 
     type urlData {
+        count: Int!
         next: String!
         previous: String
         results: [Pokemon]

@@ -5,13 +5,26 @@ import { useQuery, useLazyQuery } from "@apollo/client";
 import PokeCards from "../components/pokemonCard";
 import PaginationBar from "../components/pagination";
 
-const Main = () => {
-    const { loading , data: pokemonData } = useQuery(QUERY_POKEMONDATA);
-    const nextPokemonUrl = pokemonData?.pokemonData.next;
-    const [nextURL, setNextUrl] = useState(nextPokemonUrl);
+const Main = (props) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const { loading , data: pokemonData, fetchMore } = useQuery(QUERY_POKEMONDATA, {
+      variables: {
+        offset: currentPage 
+      }
+    });
 
-    console.log(nextPokemonUrl);
     const pokemons = pokemonData?.pokemonData?.results
+    const rootPokeData = pokemonData?.pokemonData.count;
+    console.log(currentPage);
+    console.log(pokemons)
+    
+    useEffect(() => {
+      fetchMore({
+        variables: {
+          offset: currentPage
+        }
+      })
+    }, [currentPage])
     
     return (
       <div>
@@ -32,7 +45,7 @@ const Main = () => {
             })}
         </Grid.Container>
         )}
-        <PaginationBar nextURL={{nextURL}} justify='center'/>
+        <PaginationBar pokemonData={{rootPokeData}} justify='center' setCurrentPage={setCurrentPage}/>
       </div>
     )
 };
