@@ -27,7 +27,8 @@ const PokeCards = (props) => {
       ) : (
         <Card key={pokemonName}>
           <Card.Body css={{background: '#2b2d42'}}>
-            <Card.Image 
+            <Card.Image
+              css={{background: '#EDF2F4', 'border-radius': '30px' , padding: '1px'}}
               alt={`${pokemonName}`}
               src={`${singlePokemonData?.singlePokemon.sprites.front_default}`}
             />
@@ -38,7 +39,7 @@ const PokeCards = (props) => {
             >{capitalizeFirstLetter(pokemonName)}</Text>
             <Row justify="space-around">
               <Button size="xs" color="error">
-                Share
+                Info
               </Button>
             </Row>
           </Card.Body>
