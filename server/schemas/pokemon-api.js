@@ -7,12 +7,17 @@ class PokemonAPI extends RESTDataSource {
     }
 
     async getPokemon() {
-        const data = await this.get(`/pokemon/?offset=0&limit=20`);
+        const data = await this.get(`/pokemon/`);
         return data.results;
     }
 
     async getSinglePokemon(pokemonName) {
         const data = await this.get(`/pokemon/${pokemonName}`)
+        return data;
+    }
+
+    async getPokemonData(offset, limit) {
+        const data = await this.get(`/pokemon/?offset=${offset}&limit=20`)
         return data;
     }
 }

@@ -31,3 +31,26 @@ query singlePokemon($pokemonName: String!) {
   }
 }
 `
+
+
+export const QUERY_POKEMONDATA = gql`
+query pokeData($offset: Int) {
+  pokemonData(offset: $offset) {
+    count
+    next
+    previous
+    results {
+      name
+      url
+    }
+  }
+}
+`
+
+export const FEED_QUERY = gql`
+query Feed($offset: Int, $limit: Int) {
+  feed(offset: $offset, limit: $limit) {
+    id
+  }
+}
+`

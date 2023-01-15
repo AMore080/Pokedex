@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { NextUIProvider } from '@nextui-org/react';
+import { createTheme, NextUIProvider } from '@nextui-org/react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,6 +13,18 @@ import './App.css';
 import Header from './components/header';
 import Main from './pages/Main';
 
+const theme = createTheme({
+  type: 'light',
+  theme: {
+    colors: {
+      pokeRedBtn: '#ef233c'
+    }
+  }
+})
+
+
+
+
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
@@ -21,7 +33,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <NextUIProvider>
+      <NextUIProvider theme={theme}>
         <Router>
           <Header />
           <Main />

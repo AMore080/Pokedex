@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Card, Col, Button, Text, Popover, Container, Loading } from '@nextui-org/react'
-import { QUERY_SINGLEPOKEMON, QUERY_POKEMON } from "../utils/queries";
+import { QUERY_SINGLEPOKEMON, QUERY_POKEMON, QUERY_POKEMONDATA } from "../utils/queries";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import axios from 'axios';
 import PokeCards from "../components/pokemonCard";
+import PaginationBar from "../components/pagination";
 
-const Main = () => {
-    const { loading, data: pokemonData } = useQuery(QUERY_POKEMON);
+const Main = (props) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const { loading , data: pokemonData, fetchMore } = useQuery(QUERY_POKEMONDATA, {
+      variables: {
+        offset: currentPage 
+      }
+    });
 
-    const pokemons = pokemonData?.pokemons
+    const pokemons = pokemonData?.pokemonData?.results
+    const rootPokeData = pokemonData?.pokemonData.count;
+    console.log(currentPage);
+    console.log(pokemons)
+    
+    useEffect(() => {
+      fetchMore({
+        variables: {
+          offset: currentPage
+        }
+      })
+    }, [currentPage])
     
     return (
       <div>
@@ -19,16 +35,17 @@ const Main = () => {
               loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
             />
           ) : (
-        <Grid.Container gap={2} justify='center' css={{minWidth: "50%"}}>
+        <Grid.Container gap={2} justify='center' css={{maxWidth: "80%", margin: 'auto'}}>
             {pokemons.map((pokemon) => {
                 return (
-                  <Grid lg={4} xs={4} md={3}>
+                  <Grid lg={2} xs={6} md={3}>
                     <PokeCards pokemonName={pokemon.name} />
                   </Grid>
                 )
             })}
         </Grid.Container>
         )}
+        <PaginationBar pokemonData={{rootPokeData}} justify='center' setCurrentPage={setCurrentPage}/>
       </div>
     )
 };
