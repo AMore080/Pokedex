@@ -16,6 +16,6 @@ export default function PaginationBar(props) {
 
 
     return (
-    <Pagination total={pageAmount} initialPage={1} onChange={pageChange}/>
+    <Pagination total={pageAmount} initialPage={1} onChange={pageChange} size="xl"/>
     )
   }
