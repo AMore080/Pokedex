@@ -15,8 +15,6 @@ const Main = (props) => {
 
     const pokemons = pokemonData?.pokemonData?.results
     const rootPokeData = pokemonData?.pokemonData.count;
-    console.log(currentPage);
-    console.log(pokemons)
     
     useEffect(() => {
       fetchMore({
@@ -27,25 +25,27 @@ const Main = (props) => {
     }, [currentPage])
     
     return (
-      <div>
+      <div justify='center' css={{margin: 'auto', display: "flex"}}>
           {loading ? (
             <Loading
               justify='center'
-              css={{ margin: 'auto' }}
+              css={{ margin: 'auto', display: "flex" }}
               loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
             />
           ) : (
         <Grid.Container gap={2} justify='center' css={{maxWidth: "80%", margin: 'auto'}}>
             {pokemons.map((pokemon) => {
                 return (
-                  <Grid lg={2} xs={6} md={3}>
+                  <Grid lg={2} xs={6} md={3} css={{height: "200px"}}>
                     <PokeCards pokemonName={pokemon.name} />
                   </Grid>
                 )
             })}
         </Grid.Container>
         )}
-        <PaginationBar pokemonData={{rootPokeData}} justify='center' setCurrentPage={setCurrentPage}/>
+        <Grid.Container justify='center'>
+          <PaginationBar pokemonData={{rootPokeData}} setCurrentPage={setCurrentPage}/>
+        </Grid.Container>
       </div>
     )
 };
