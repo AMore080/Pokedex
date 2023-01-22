@@ -2,6 +2,7 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const db = require('./config/connection');
+const path = require('path');
 
 
 // utils
@@ -23,6 +24,10 @@ const server = new ApolloServer({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})
 
 const startApolloServer = async (typeDefs, resolvers) => {
     await server.start();
