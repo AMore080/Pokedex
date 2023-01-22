@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Text, Modal, Loading, Row, Image } from '@nextui-org/react'
+import { Card, Button, Text, Modal, Loading, Row, Image, Radio } from '@nextui-org/react'
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { QUERY_SINGLEPOKEMON } from "../utils/queries";
 
@@ -72,7 +72,7 @@ const PokeCards = (props) => {
     const someFunc = async () => {
       handler();
       const { data } = await getSinglePokeType({variables: pokemonName});
-      console.log(data?.singlePokemon.types);
+      console.log(data?.singlePokemon);
       setPokeTypings(data?.singlePokemon.types);
     }
 
@@ -91,6 +91,10 @@ const PokeCards = (props) => {
         skip: !pokemonName,
         variables: { pokemonName }
       })
+    
+    const [sprite, setSprite] = useState(singlePokemonData?.singlePokemon.sprites.front_default)
+    console.log(singlePokemonData?.singlePokemon.sprites.front_default)
+    console.log(sprite);
 
     const [getSinglePokeType, { data: singlePokemonDataTypes } ]= useLazyQuery(QUERY_SINGLEPOKEMON, {
         skip: !pokemonName,
@@ -106,25 +110,25 @@ const PokeCards = (props) => {
           loadingCss={{ $$loadingSize: "50px", $$loadingBorder: "10px" }}
         />
       ) : (
-        <Card key={pokemonName}>
-          <Card.Body css={{background: '#2b2d42'}}>
-            <Card.Image
-              css={{background: '#EDF2F4', 'border-radius': '30px' , padding: '1px'}}
-              alt={`${pokemonName}`}
-              src={`${singlePokemonData?.singlePokemon.sprites.front_default}`}
-            />
-            <Text
-            hideIn={"xs"}
-            h3
-            color="#EDF2F4"
-            >{capitalizeFirstLetter(pokemonName)}</Text>
-            <Row justify="space-around">
-                <Button size="xs" color="error" onPress={someFunc}>
-                  Info
-                </Button>
-            </Row>
-          </Card.Body>
-        </Card>
+          <Card key={pokemonName} variant="bordered">
+            <Card.Body css={{background: '#2b2d42'}}>
+              <Card.Image
+                css={{background: '#EDF2F4', 'border-radius': '30px' , padding: '1px'}}
+                alt={`${pokemonName}`}
+                src={`${singlePokemonData?.singlePokemon.sprites.front_default}`}
+              />
+              <Text
+              hideIn={"xs"}
+              h3
+              color="#EDF2F4"
+              >{capitalizeFirstLetter(pokemonName)}</Text>
+              <Row justify="space-around">
+                  <Button size="xs" color="error" onPress={someFunc}>
+                    Info
+                  </Button>
+              </Row>
+            </Card.Body>
+          </Card>
       )}
         <Modal
         open={visible}
@@ -136,11 +140,25 @@ const PokeCards = (props) => {
             </Text>
           </Modal.Header>
           <Modal.Body >
+            <Row>
+            <Radio.Group label="Forms" 
+            defaultValue={singlePokemonData?.singlePokemon.sprites.front_default}
+            onChange={setSprite}
+            >
+              <Radio 
+              value={singlePokemonData?.singlePokemon.sprites.front_default}
+              >
+              Default
+              </Radio>
+              <Radio value={singlePokemonData?.singlePokemon.sprites.front_shiny}>
+              Shiny
+              </Radio>
+            </Radio.Group>
             <Image
-              width={220}
-              height={120}
-              src={`${singlePokemonData?.singlePokemon.sprites.front_default}`}
-            />
+                    height={120}
+                    src={sprite || singlePokemonData?.singlePokemon.sprites.front_default}
+                  />
+            </Row>
             <Row fluid="true" justify="center">
               {pokeTypings.map((pokemon) => {
                 return(

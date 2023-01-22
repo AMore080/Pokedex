@@ -24,6 +24,7 @@ const typeDefs = gql`
 
     type Sprites {
         front_default: String!
+        front_shiny: String!
     }
 
 
