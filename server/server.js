@@ -23,7 +23,7 @@ const server = new ApolloServer({
 })
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));\
+app.use(express.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
