@@ -27,6 +27,7 @@ query singlePokemon($pokemonName: String!) {
     }
     sprites {
       front_default
+      front_shiny
     }
   }
 }
