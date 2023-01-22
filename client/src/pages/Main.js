@@ -15,8 +15,6 @@ const Main = (props) => {
 
     const pokemons = pokemonData?.pokemonData?.results
     const rootPokeData = pokemonData?.pokemonData.count;
-    console.log(currentPage);
-    console.log(pokemons)
     
     useEffect(() => {
       fetchMore({
