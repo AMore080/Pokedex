@@ -33,10 +33,10 @@ const Main = (props) => {
               loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
             />
           ) : (
-        <Grid.Container gap={2} justify='center' css={{maxWidth: "80%", margin: 'auto'}}>
+        <Grid.Container gap={2} justify='center' css={{maxWidth: "90%", margin: 'auto'}}>
             {pokemons.map((pokemon) => {
                 return (
-                  <Grid lg={2} xs={6} md={3} css={{height: "200px"}}>
+                  <Grid lg={2} xs={6} md={3} css={{maxHeight: "200px"}}>
                     <PokeCards pokemonName={pokemon.name} />
                   </Grid>
                 )

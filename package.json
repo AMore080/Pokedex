@@ -5,6 +5,8 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js --ignore client",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
@@ -19,8 +21,11 @@
   "bugs": {
     "url": "https://github.com/AMore080/Pokedex/issues"
   },
-  "homepage": "https://github.com/AMore080/Pokedex#readme",
+  "homepage": "https://amore080.github.io/Pokedex/",
   "dependencies": {
     "concurrently": "^7.6.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
